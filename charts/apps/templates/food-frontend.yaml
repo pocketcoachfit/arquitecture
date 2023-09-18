@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: food-frontend
+  template:
+    metadata:
+      labels:
+        app: food-frontend
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/food-frontend:latest
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: envfile 
+              subPath: .env
+              mountPath: /app/.env
+      volumes:
+        - name: envfile 
+          configMap:
+            name: food-frontend 
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: food-frontend 
+data:
+  .env: |
+    CONFIG_ENDPOINT_URL = https://{{ .Values.global.domainName }}/secure/app
+    NEXT_PUBLIC_DATA_API_BASEURL = https://api.{{ .Values.global.domainName }}/food/v1
+    NEXT_PUBLIC_FRONTEND_BASE = https://{{ .Values.global.domainName }}
+    NEXT_PUBLIC_LOGO_URL = $NEXT_PUBLIC_FRONTEND_BASE/img/logo.png
+    NEXT_PUBLIC_FALLBACK_IMAGE_URL = $NEXT_PUBLIC_FRONTEND_BASE/img/logo.png
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: food-frontend
+spec:
+  selector:
+    app: food-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+
+

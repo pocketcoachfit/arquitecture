@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: admin-panel-2
+spec:
+  selector:
+    matchLabels:
+      app: admin-panel-2
+  serviceName: admin-panel-2
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: admin-panel-2 # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: admin-panel-2
+          image: ghcr.io/pocketcoachfit/admin-panel-2:v1.0.0  
+          # command: ["sleep", "3600"]
+          command: ["/bin/sh","-c"]
+          args: ["yarn build && yarn start"]
+          ports:
+            - name: main
+              containerPort: 1337
+          volumeMounts:
+            - name: envfile 
+              subPath: .env
+              mountPath: /opt/app/.env
+            - name: sqlite-file  
+              mountPath:  /opt/app/.tmp/data.db
+            - name: uploads 
+              mountPath: /opt/app/public/uploads
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+      volumes:
+        - name: envfile 
+          configMap:
+            name: admin-panel-2 
+        - name: sqlite-file 
+          hostPath:
+            path: /data/admin-panel-2/database/data.db
+            type: File
+        - name: uploads 
+          hostPath:
+            path: /data/admin-panel-2/uploads
+            type: Directory
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-panel-2 
+data:
+  .env: |
+    PUBLIC_URL = 'https://{{ .Values.global.domainName }}/secure'
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: admin-panel-2 
+spec:
+  selector:
+    app: admin-panel-2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+
+

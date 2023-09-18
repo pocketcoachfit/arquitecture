@@ -1,0 +1,3 @@
+global:
+  domainName: 'nvim.live'
+  imagePullSecrets: registry-key-secret
