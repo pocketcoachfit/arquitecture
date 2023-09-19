@@ -13,6 +13,13 @@ spec:
   # -------------------------------------------------------------
   routes:
 
+  # website
+  - match: Host(`pocketcoach.nvim.live`)
+    kind: Rule
+    services:
+    - name: website
+      port: 80
+
   # admin-panel-1 API
   - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/strapi`)
     kind: Rule
@@ -47,6 +54,13 @@ spec:
     - name: food-frontend 
       port: 80
 
+  # food-backend 
+  - match: Host(`api.pocketcoach.nvim.live`) && PathPrefix(`/food`)
+    kind: Rule
+    services:
+      - name: food-backend 
+        port: 80
+
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
@@ -57,6 +71,18 @@ spec:
   stripPrefix:
     prefixes:
       - "/strapi"
+    forceSlash: false
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-food-backend
+spec:
+  stripPrefix:
+    prefixes:
+      - "/food"
     forceSlash: false
 
 ---

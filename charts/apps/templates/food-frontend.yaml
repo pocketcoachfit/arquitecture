@@ -16,32 +16,33 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: ghcr.io/pocketcoachfit/food-frontend:latest
+          image: ghcr.io/pocketcoachfit/food-frontend:v1.2.0
           ports:
             - name: main
               containerPort: 3000
           volumeMounts:
-            - name: envfile 
-              subPath: .env
-              mountPath: /app/.env
+            - name: env-production
+              subPath: .env.production
+              mountPath: /app/.env.production
       volumes:
-        - name: envfile 
+        - name: env-production 
           configMap:
-            name: food-frontend 
+            name: food-frontend-env-production
 
 ---
 
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: food-frontend 
+  name: food-frontend-env-production 
 data:
-  .env: |
-    CONFIG_ENDPOINT_URL = https://{{ .Values.global.domainName }}/secure/app
-    NEXT_PUBLIC_DATA_API_BASEURL = https://api.{{ .Values.global.domainName }}/food/v1
-    NEXT_PUBLIC_FRONTEND_BASE = https://{{ .Values.global.domainName }}
-    NEXT_PUBLIC_LOGO_URL = $NEXT_PUBLIC_FRONTEND_BASE/img/logo.png
-    NEXT_PUBLIC_FALLBACK_IMAGE_URL = $NEXT_PUBLIC_FRONTEND_BASE/img/logo.png
+  .env.production: |
+    NEXT_PUBLIC_FRONTEND_BASEURL = 'https://app.{{ .Values.global.domainName }}'
+    NEXT_PUBLIC_DATA_API_BASEURL = 'https://api.{{ .Values.global.domainName }}/food/v1'
+    NEXT_PUBLIC_STRAPI2_URL = 'https://{{ .Values.global.domainName }}/secure'
+    NEXT_PUBLIC_LOGO_URL = 'https://{{ .Values.global.domainName }}/img/logo.png'
+    NEXT_PUBLIC_FALLBACK_IMAGE_URL = 'https://{{ .Values.global.domainName }}/img/logo.png'
+    CONFIG_ENDPOINT_URL = 'https://{{ .Values.global.domainName }}/secure/app'
 
 ---
 

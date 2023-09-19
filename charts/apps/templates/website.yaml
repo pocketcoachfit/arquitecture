@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website
+  template:
+    metadata:
+      labels:
+        app: website
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/website:v1.1.0
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: env-production
+              subPath: .env.production
+              mountPath: /app/.env.production
+            - name: env-local
+              mountPath: /app/.env.local
+      volumes:
+        - name: env-production 
+          configMap:
+            name: website-env-production
+        - name: env-local 
+          hostPath:
+            path: /secrets/website/.env.local
+            type: File
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: website-env-production 
+data:
+  .env.production: |
+    NEXT_PUBLIC_BASE_URL = 'https://{{ .Values.global.domainName }}'
+    NEXT_PUBLIC_STRAPI_URL = $NEXT_PUBLIC_BASE_URL/strapi
+    NEXT_LOCAL_REST_API_URL = $NEXT_PUBLIC_STRAPI_URL
+    NEXT_LOCAL_GRAPH_API_URL = $NEXT_PUBLIC_STRAPI_URL/graphql
+
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: website
+spec:
+  selector:
+    app: website
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+
+
