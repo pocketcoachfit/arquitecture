@@ -26,6 +26,9 @@ spec:
               mountPath: /app/.env.production
             - name: env-local
               mountPath: /app/.env.local
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 1000
       volumes:
         - name: env-production 
           configMap:
