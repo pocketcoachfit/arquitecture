@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clients-data-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clients-data-api
+  template:
+    metadata:
+      labels:
+        app: clients-data-api
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: traefik/whoami 
+          image: ghcr.io/pocketcoachfit/clients-data-api:v1.1.0
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: envfile
+              mountPath: /app/.env
+      volumes:
+        - name: envfile 
+          hostPath:
+            path: /secrets/clients-data-api/.env
+            type: File
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: clients-data-api
+spec:
+  selector:
+    app: clients-data-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+

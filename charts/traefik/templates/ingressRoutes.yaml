@@ -70,6 +70,21 @@ spec:
       - name: food-backend 
         port: 80
 
+  # clients-data-api 
+  - match: Host(`api.pocketcoach.nvim.live`) && PathPrefix(`/clients`)
+    kind: Rule
+    services:
+      - name: clients-data-api 
+        port: 80
+
+  # clients-data-api TEMPORAL
+  - match: Host(`demo.pocketcoach.nvim.live`) && PathPrefix(`/clients`)
+    kind: Rule
+    services:
+      - name: clients-data-api 
+        port: 80
+
+
 ---
 
 apiVersion: traefik.containo.us/v1alpha1
