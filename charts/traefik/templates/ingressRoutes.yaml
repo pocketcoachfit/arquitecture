@@ -20,6 +20,15 @@ spec:
     - name: website
       port: 80
 
+  # funnel-frontend
+  - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/promo`)
+    kind: Rule
+    middlewares:
+      - name: strip-prefix-funnel-frontend
+    services:
+    - name: funnel-frontend
+      port: 80
+
   # admin-panel-1 API
   - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/strapi`)
     kind: Rule
@@ -60,6 +69,18 @@ spec:
     services:
       - name: food-backend 
         port: 80
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-funnel-frontend
+spec:
+  stripPrefix:
+    prefixes:
+      - "/promo"
+    forceSlash: false
 
 ---
 

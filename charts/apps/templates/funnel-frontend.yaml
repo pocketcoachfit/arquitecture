@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: funnel-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: funnel-frontend
+  template:
+    metadata:
+      labels:
+        app: funnel-frontend
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/funnel-frontend:v1.1.0
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: env-local
+              mountPath: /app/.env.local
+      securityContext:
+        runAsUser: 1001
+        fsGroup: 1000
+      volumes:
+        - name: env-local 
+          hostPath:
+            path: /secrets/funnel-frontend/.env.local
+            type: File
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: funnel-frontend
+spec:
+  selector:
+    app: funnel-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+
+
