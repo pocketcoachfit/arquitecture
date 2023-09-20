@@ -14,14 +14,14 @@ spec:
   routes:
 
   # website
-  - match: Host(`pocketcoach.nvim.live`)
+  - match: Host(`pocketcoach.fit`)
     kind: Rule
     services:
     - name: website
       port: 80
 
   # funnel-frontend
-  - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/promo`)
+  - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
     kind: Rule
     middlewares:
       - name: strip-prefix-funnel-frontend
@@ -30,7 +30,7 @@ spec:
       port: 80
 
   # admin-panel-1 API
-  - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/strapi`)
+  - match: Host(`pocketcoach.fit`) && PathPrefix(`/strapi`)
     kind: Rule
     middlewares:
       - name: strip-prefix-admin-panel-1
@@ -39,7 +39,7 @@ spec:
       port: 80
 
   # admin-panel-1 DASHBOARD
-  - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/admin`)
+  - match: Host(`pocketcoach.fit`) && PathPrefix(`/admin`)
     kind: Rule
     middlewares:
       - name: strip-prefix-admin-panel-1
@@ -48,7 +48,7 @@ spec:
         port: 80
 
   # admin-panel-2 API
-  - match: Host(`pocketcoach.nvim.live`) && PathPrefix(`/secure`)
+  - match: Host(`pocketcoach.fit`) && PathPrefix(`/secure`)
     kind: Rule
     middlewares:
       - name: strip-prefix-admin-panel-2
@@ -57,28 +57,28 @@ spec:
       port: 80
 
   # food-frontend 
-  - match: Host(`app.pocketcoach.nvim.live`)
+  - match: Host(`app.pocketcoach.fit`)
     kind: Rule
     services:
     - name: food-frontend 
       port: 80
 
   # food-backend 
-  - match: Host(`api.pocketcoach.nvim.live`) && PathPrefix(`/food`)
+  - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/food`)
     kind: Rule
     services:
       - name: food-backend 
         port: 80
 
   # clients-data-api 
-  - match: Host(`api.pocketcoach.nvim.live`) && PathPrefix(`/clients`)
+  - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/clients`)
     kind: Rule
     services:
       - name: clients-data-api 
         port: 80
 
   # clients-data-api TEMPORAL
-  - match: Host(`demo.pocketcoach.nvim.live`) && PathPrefix(`/clients`)
+  - match: Host(`demo.pocketcoach.fit`) && PathPrefix(`/clients`)
     kind: Rule
     services:
       - name: clients-data-api 
@@ -147,13 +147,13 @@ spec:
 #     certResolver: myresolver
 #   routes:
 #     - kind: Rule
-#       match: Host(`argo.pocketcoach.nvim.live`)
+#       match: Host(`argo.pocketcoach.fit`)
 #       priority: 10
 #       services:
 #         - name: argocd-server
 #           port: 80
 #     - kind: Rule
-#       match: Host(`argo.pocketcoach.nvim.live`) && Headers(`Content-Type`, `application/grpc`)
+#       match: Host(`argo.pocketcoach.fit`) && Headers(`Content-Type`, `application/grpc`)
 #       priority: 11
 #       services:
 #         - name: argocd-server

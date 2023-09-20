@@ -57,7 +57,7 @@ metadata:
   name: admin-panel-2
 data:
   .env: |
-    PUBLIC_URL = 'https://pocketcoach.nvim.live/secure'
+    PUBLIC_URL = 'https://pocketcoach.fit/secure'
 
 ---
 kind: Service

@@ -45,7 +45,7 @@ metadata:
   name: website-env-production
 data:
   .env.production: |
-    NEXT_PUBLIC_BASE_URL = 'https://pocketcoach.nvim.live'
+    NEXT_PUBLIC_BASE_URL = 'https://pocketcoach.fit'
     NEXT_PUBLIC_STRAPI_URL = $NEXT_PUBLIC_BASE_URL/strapi
     NEXT_LOCAL_REST_API_URL = $NEXT_PUBLIC_STRAPI_URL
     NEXT_LOCAL_GRAPH_API_URL = $NEXT_PUBLIC_STRAPI_URL/graphql

@@ -57,7 +57,7 @@ metadata:
   name: admin-panel-1
 data:
   .env: |
-    PUBLIC_URL = 'https://pocketcoach.nvim.live/strapi'
+    PUBLIC_URL = 'https://pocketcoach.fit/strapi'
 
 ---
 kind: Service

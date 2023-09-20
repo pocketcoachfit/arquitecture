@@ -36,12 +36,12 @@ metadata:
   name: food-frontend-env-production
 data:
   .env.production: |
-    NEXT_PUBLIC_FRONTEND_BASEURL = 'https://app.pocketcoach.nvim.live'
-    NEXT_PUBLIC_DATA_API_BASEURL = 'https://api.pocketcoach.nvim.live/food/v1'
-    NEXT_PUBLIC_STRAPI2_URL = 'https://pocketcoach.nvim.live/secure'
-    NEXT_PUBLIC_LOGO_URL = 'https://pocketcoach.nvim.live/img/logo.png'
-    NEXT_PUBLIC_FALLBACK_IMAGE_URL = 'https://pocketcoach.nvim.live/img/logo.png'
-    CONFIG_ENDPOINT_URL = 'https://pocketcoach.nvim.live/secure/app'
+    NEXT_PUBLIC_FRONTEND_BASEURL = 'https://app.pocketcoach.fit'
+    NEXT_PUBLIC_DATA_API_BASEURL = 'https://api.pocketcoach.fit/food/v1'
+    NEXT_PUBLIC_STRAPI2_URL = 'https://pocketcoach.fit/secure'
+    NEXT_PUBLIC_LOGO_URL = 'https://pocketcoach.fit/img/logo.png'
+    NEXT_PUBLIC_FALLBACK_IMAGE_URL = 'https://pocketcoach.fit/img/logo.png'
+    CONFIG_ENDPOINT_URL = 'https://pocketcoach.fit/secure/app'
 
 ---
 kind: Service
