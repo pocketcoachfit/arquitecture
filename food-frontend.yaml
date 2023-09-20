@@ -25,27 +25,25 @@ spec:
               subPath: .env.production
               mountPath: /app/.env.production
       volumes:
-        - name: env-production 
+        - name: env-production
           configMap:
             name: food-frontend-env-production
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: food-frontend-env-production 
+  name: food-frontend-env-production
 data:
   .env.production: |
-    NEXT_PUBLIC_FRONTEND_BASEURL = 'https://app.{{ .Values.global.domainName }}'
-    NEXT_PUBLIC_DATA_API_BASEURL = 'https://api.{{ .Values.global.domainName }}/food/v1'
-    NEXT_PUBLIC_STRAPI2_URL = 'https://{{ .Values.global.domainName }}/secure'
-    NEXT_PUBLIC_LOGO_URL = 'https://{{ .Values.global.domainName }}/img/logo.png'
-    NEXT_PUBLIC_FALLBACK_IMAGE_URL = 'https://{{ .Values.global.domainName }}/img/logo.png'
-    CONFIG_ENDPOINT_URL = 'https://{{ .Values.global.domainName }}/secure/app'
+    NEXT_PUBLIC_FRONTEND_BASEURL = 'https://app.pocketcoach.fit'
+    NEXT_PUBLIC_DATA_API_BASEURL = 'https://api.pocketcoach.fit/food/v1'
+    NEXT_PUBLIC_STRAPI2_URL = 'https://pocketcoach.fit/secure'
+    NEXT_PUBLIC_LOGO_URL = 'https://pocketcoach.fit/img/logo.png'
+    NEXT_PUBLIC_FALLBACK_IMAGE_URL = 'https://pocketcoach.fit/img/logo.png'
+    CONFIG_ENDPOINT_URL = 'https://pocketcoach.fit/secure/app'
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -57,5 +55,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: main
-
-

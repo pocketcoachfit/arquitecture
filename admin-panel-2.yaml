@@ -19,53 +19,51 @@ spec:
         - name: registry-key-secret
       containers:
         - name: admin-panel-2
-          image: ghcr.io/pocketcoachfit/admin-panel-2:v1.0.0  
+          image: ghcr.io/pocketcoachfit/admin-panel-2:v1.0.0
           # command: ["sleep", "3600"]
-          command: ["/bin/sh","-c"]
+          command: ["/bin/sh", "-c"]
           args: ["yarn build && yarn start"]
           ports:
             - name: main
               containerPort: 1337
           volumeMounts:
-            - name: envfile 
+            - name: envfile
               subPath: .env
               mountPath: /opt/app/.env
-            - name: sqlite-file  
-              mountPath:  /opt/app/.tmp/data.db
-            - name: uploads 
+            - name: sqlite-file
+              mountPath: /opt/app/.tmp/data.db
+            - name: uploads
               mountPath: /opt/app/public/uploads
       securityContext:
         runAsUser: 0
         runAsGroup: 0
       volumes:
-        - name: envfile 
+        - name: envfile
           configMap:
-            name: admin-panel-2 
-        - name: sqlite-file 
+            name: admin-panel-2
+        - name: sqlite-file
           hostPath:
             path: /data/admin-panel-2/database/data.db
             type: File
-        - name: uploads 
+        - name: uploads
           hostPath:
             path: /data/admin-panel-2/uploads
             type: Directory
 
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: admin-panel-2 
+  name: admin-panel-2
 data:
   .env: |
-    PUBLIC_URL = 'https://{{ .Values.global.domainName }}/secure'
+    PUBLIC_URL = 'https://pocketcoach.fit/secure'
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
-  name: admin-panel-2 
+  name: admin-panel-2
 spec:
   selector:
     app: admin-panel-2
@@ -73,5 +71,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: main
-
-
