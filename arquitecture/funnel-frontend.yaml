@@ -16,7 +16,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: ghcr.io/pocketcoachfit/funnel-frontend:v1.1.0
+          image: ghcr.io/pocketcoachfit/funnel-frontend:v1.2.0
           ports:
             - name: main
               containerPort: 3000
@@ -27,13 +27,12 @@ spec:
         runAsUser: 1001
         fsGroup: 1000
       volumes:
-        - name: env-local 
+        - name: env-local
           hostPath:
             path: /secrets/funnel-frontend/.env.local
             type: File
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -45,5 +44,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: main
-
-
