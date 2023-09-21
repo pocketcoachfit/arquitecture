@@ -22,8 +22,8 @@ spec:
     # redirect wwww
     - match: Host(`www.pocketcoach.fit`)
       kind: Rule
-      # middlewares:
-      #   - name: www-to-https
+      middlewares:
+        - name: www-to-https
       services:
         - name: whoami
           port: 80
