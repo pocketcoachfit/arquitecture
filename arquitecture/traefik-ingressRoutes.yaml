@@ -12,81 +12,78 @@ spec:
   #                         ROUTES
   # -------------------------------------------------------------
   routes:
+    # website
+    - match: Host(`pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: website
+          port: 80
 
-  # website
-  - match: Host(`pocketcoach.fit`)
-    kind: Rule
-    services:
-    - name: website
-      port: 80
+    # funnel-frontend
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-funnel-frontend
+      services:
+        - name: funnel-frontend
+          port: 80
 
-  # funnel-frontend
-  - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
-    kind: Rule
-    middlewares:
-      - name: strip-prefix-funnel-frontend
-    services:
-    - name: funnel-frontend
-      port: 80
+    # admin-panel-1 API
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/strapi`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-admin-panel-1
+      services:
+        - name: admin-panel-1
+          port: 80
 
-  # admin-panel-1 API
-  - match: Host(`pocketcoach.fit`) && PathPrefix(`/strapi`)
-    kind: Rule
-    middlewares:
-      - name: strip-prefix-admin-panel-1
-    services:
-    - name: admin-panel-1 
-      port: 80
+    # admin-panel-1 DASHBOARD
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/admin`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-admin-panel-1
+      services:
+        - name: admin-panel-1
+          port: 80
 
-  # admin-panel-1 DASHBOARD
-  - match: Host(`pocketcoach.fit`) && PathPrefix(`/admin`)
-    kind: Rule
-    middlewares:
-      - name: strip-prefix-admin-panel-1
-    services:
-      - name: admin-panel-1 
-        port: 80
+    # admin-panel-2 API
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/secure`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-admin-panel-2
+      services:
+        - name: admin-panel-2
+          port: 80
 
-  # admin-panel-2 API
-  - match: Host(`pocketcoach.fit`) && PathPrefix(`/secure`)
-    kind: Rule
-    middlewares:
-      - name: strip-prefix-admin-panel-2
-    services:
-    - name: admin-panel-2 
-      port: 80
+    # food-frontend
+    - match: Host(`app.pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: food-frontend
+          port: 80
 
-  # food-frontend 
-  - match: Host(`app.pocketcoach.fit`)
-    kind: Rule
-    services:
-    - name: food-frontend 
-      port: 80
+    # food-backend
+    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/food`)
+      kind: Rule
+      services:
+        - name: food-backend
+          port: 80
 
-  # food-backend 
-  - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/food`)
-    kind: Rule
-    services:
-      - name: food-backend 
-        port: 80
+    # clients-data-api
+    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/clients`)
+      kind: Rule
+      services:
+        - name: clients-data-api
+          port: 80
 
-  # clients-data-api 
-  - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/clients`)
-    kind: Rule
-    services:
-      - name: clients-data-api 
-        port: 80
-
-  # clients-data-api TEMPORAL
-  - match: Host(`demo.pocketcoach.fit`) && PathPrefix(`/clients`)
-    kind: Rule
-    services:
-      - name: clients-data-api 
-        port: 80
-
+    # clients-data-api TEMPORAL
+    - match: Host(`demo.pocketcoach.fit`) && PathPrefix(`/clients`)
+      kind: Rule
+      services:
+        - name: clients-data-api
+          port: 80
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -98,7 +95,6 @@ spec:
     forceSlash: false
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -110,7 +106,6 @@ spec:
     forceSlash: false
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -122,7 +117,6 @@ spec:
     forceSlash: false
 
 ---
-
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
@@ -132,7 +126,6 @@ spec:
     prefixes:
       - "/secure"
     forceSlash: false
-
 # ## ================ Argo =======================================
 #
 # apiVersion: traefik.containo.us/v1alpha1
