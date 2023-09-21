@@ -102,7 +102,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: www-to-https
-  namespace: bar
+  namespace: default
 
 spec:
   redirectRegex:
