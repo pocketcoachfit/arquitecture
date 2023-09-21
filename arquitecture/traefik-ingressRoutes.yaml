@@ -21,6 +21,15 @@ spec:
         - name: website
           port: 80
 
+    # redirect wwww
+    - match: Host(`www.pocketcoach.fit`)
+      kind: Rule
+      # middlewares:
+      #   - name: www-to-https
+      services:
+        - name: whoiam
+          port: 80
+
     # funnel-frontend
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
       kind: Rule
