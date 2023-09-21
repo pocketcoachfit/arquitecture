@@ -15,8 +15,6 @@ spec:
     # website
     - match: Host(`pocketcoach.fit`)
       kind: Rule
-      middlewares:
-        - name: www-to-https
       services:
         - name: website
           port: 80
@@ -34,7 +32,6 @@ spec:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
       kind: Rule
       middlewares:
-        - name: www-to-https
         - name: strip-prefix-funnel-frontend
       services:
         - name: funnel-frontend
@@ -44,7 +41,6 @@ spec:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/strapi`)
       kind: Rule
       middlewares:
-        - name: www-to-https
         - name: strip-prefix-admin-panel-1
       services:
         - name: admin-panel-1
@@ -54,7 +50,6 @@ spec:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/admin`)
       kind: Rule
       middlewares:
-        - name: www-to-https
         - name: strip-prefix-admin-panel-1
       services:
         - name: admin-panel-1
@@ -64,7 +59,6 @@ spec:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/secure`)
       kind: Rule
       middlewares:
-        - name: www-to-https
         - name: strip-prefix-admin-panel-2
       services:
         - name: admin-panel-2
@@ -73,8 +67,6 @@ spec:
     # food-frontend
     - match: Host(`app.pocketcoach.fit`)
       kind: Rule
-      middlewares:
-        - name: www-to-https
       services:
         - name: food-frontend
           port: 80
@@ -82,8 +74,6 @@ spec:
     # food-backend
     - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/food`)
       kind: Rule
-      middlewares:
-        - name: www-to-https
       services:
         - name: food-backend
           port: 80
@@ -91,8 +81,6 @@ spec:
     # clients-data-api
     - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/clients`)
       kind: Rule
-      middlewares:
-        - name: www-to-https
       services:
         - name: clients-data-api
           port: 80
@@ -100,8 +88,6 @@ spec:
     # clients-data-api TEMPORAL
     - match: Host(`demo.pocketcoach.fit`) && PathPrefix(`/clients`)
       kind: Rule
-      middlewares:
-        - name: www-to-https
       services:
         - name: clients-data-api
           port: 80
