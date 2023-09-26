@@ -31,8 +31,8 @@ spec:
     # funnel-frontend
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
       kind: Rule
-      middlewares:
-        - name: strip-prefix-funnel-frontend
+      # middlewares:
+      #   - name: strip-prefix-funnel-frontend
       services:
         - name: funnel-frontend
           port: 80
