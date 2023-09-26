@@ -1,0 +1,28 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: admin-panel-1
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: myresolver
+  routes:
+    # admin-panel-1 API
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/strapi`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-admin-panel-1
+      services:
+        - name: admin-panel-1
+          port: 80
+
+    # admin-panel-1 DASHBOARD
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/admin`)
+      kind: Rule
+      middlewares:
+        - name: strip-prefix-admin-panel-1
+      services:
+        - name: admin-panel-1
+          port: 80

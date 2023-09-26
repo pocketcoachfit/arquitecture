@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: website
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: myresolver
+  routes:
+    # website
+    - match: Host(`pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: website
+          port: 80

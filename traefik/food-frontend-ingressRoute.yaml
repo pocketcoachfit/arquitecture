@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: food-frontend
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: myresolver
+  routes:
+    # food-frontend
+    - match: Host(`app.pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: food-frontend
+          port: 80

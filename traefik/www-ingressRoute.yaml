@@ -1,7 +1,7 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: whoami
+  name: www-redirect
   namespace: default
 spec:
   entryPoints:
@@ -10,10 +10,10 @@ spec:
     certResolver: myresolver
   routes:
     # redirect wwww
-    - match: Host(`whoami.pocketcoach.fit`)
+    - match: Host(`www.pocketcoach.fit`)
       kind: Rule
       middlewares:
         - name: www-to-https
       services:
-        - name: whoami
+        - name: website
           port: 80

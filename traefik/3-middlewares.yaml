@@ -1,0 +1,55 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-funnel-frontend
+spec:
+  stripPrefix:
+    prefixes:
+      - "/promo"
+    forceSlash: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-admin-panel-1
+spec:
+  stripPrefix:
+    prefixes:
+      - "/strapi"
+    forceSlash: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-food-backend
+spec:
+  stripPrefix:
+    prefixes:
+      - "/food"
+    forceSlash: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-admin-panel-2
+spec:
+  stripPrefix:
+    prefixes:
+      - "/secure"
+    forceSlash: false
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: www-to-https
+  namespace: default
+
+spec:
+  redirectRegex:
+    regex: '^https?://(?:www\.)?(.+)'
+    replacement: "https://${1}"
+    permanent: true
