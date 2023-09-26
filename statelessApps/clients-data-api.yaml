@@ -16,7 +16,6 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: traefik/whoami 
           image: ghcr.io/pocketcoachfit/clients-data-api:v1.1.0
           ports:
             - name: main
@@ -25,13 +24,12 @@ spec:
             - name: envfile
               mountPath: /app/.env
       volumes:
-        - name: envfile 
+        - name: envfile
           hostPath:
             path: /secrets/clients-data-api/.env
             type: File
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -43,4 +41,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: main
-

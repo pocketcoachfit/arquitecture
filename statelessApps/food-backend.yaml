@@ -16,7 +16,6 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: traefik/whoami 
           image: ghcr.io/pocketcoachfit/food-backend:v1.0.1
           ports:
             - name: main
@@ -24,19 +23,18 @@ spec:
           env:
             - name: PRODUCT_PICTURES_BASE_URL
               value: https://pocketcoach.club/images/uploads/alimentos
-            - name: RECIPE_PICTURES_BASE_URL 
+            - name: RECIPE_PICTURES_BASE_URL
               value: https://pocketcoach.club/images/uploads/comidas
           volumeMounts:
             - name: envfile
               mountPath: /app/.env
       volumes:
-        - name: envfile 
+        - name: envfile
           hostPath:
             path: /secrets/food-backend/.env
             type: File
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -48,4 +46,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: main
-
