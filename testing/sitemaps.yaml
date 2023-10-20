@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: default
+  name: sitemaps
+  labels:
+    app: sitemaps
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sitemaps
+  template:
+    metadata:
+      labels:
+        app: sitemaps
+    spec:
+      containers:
+        - name: sitemaps
+          image: httpd:alpine3.18 
+          ports:
+            - name: web
+              containerPort: 80
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sitemaps
+
+spec:
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+  selector:
+    app: sitemaps
