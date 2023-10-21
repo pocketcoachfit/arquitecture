@@ -16,7 +16,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: ghcr.io/pocketcoachfit/website:v1.1.0
+          image: ghcr.io/pocketcoachfit/website:v1.3.0
           ports:
             - name: main
               containerPort: 3000
