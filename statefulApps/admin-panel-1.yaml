@@ -19,7 +19,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: admin-panel-1
-          image: ghcr.io/pocketcoachfit/admin-panel-1:v1.2.0
+          image: ghcr.io/pocketcoachfit/admin-panel-1:v1.3.0
           # command: ["sleep", "3600"]
           command: ["/bin/sh", "-c"]
           args: ["yarn build && yarn start"]
