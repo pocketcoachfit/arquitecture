@@ -27,10 +27,10 @@ spec:
       services:
         - name: funnel-frontend
           port: 80
-    - match: Host(`cdf.promo`) && PathPrefix(`/promo`)
-      kind: Rule
-      # middlewares:
-      #   - name: strip-prefix-funnel-frontend
-      services:
-        - name: funnel-frontend
-          port: 80
+    # - match: Host(`cdf.promo`) && PathPrefix(`/promo`)
+    #   kind: Rule
+    #   # middlewares:
+    #   #   - name: strip-prefix-funnel-frontend
+    #   services:
+    #     - name: funnel-frontend
+    #       port: 80
