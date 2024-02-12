@@ -13,20 +13,27 @@ spec:
   # -------------------------------------------------------------
   routes:
     # funnel-frontend
+    # ----------------------------------------------------------- 
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/promo`)
       kind: Rule
-      # middlewares:
-      #   - name: strip-prefix-funnel-frontend
       services:
         - name: funnel-frontend
           port: 80
+    # ----------------------------------------------------------- 
+    - match: Host(`pocketcoach.promo`)
+      kind: Rule
+      middlewares:
+        - name: add-prefix-promo
+      services:
+        - name: funnel-frontend
+          port: 80
+    # ----------------------------------------------------------- 
     - match: Host(`pocketcoach.promo`) && PathPrefix(`/promo`)
       kind: Rule
-      # middlewares:
-      #   - name: strip-prefix-funnel-frontend
       services:
         - name: funnel-frontend
           port: 80
+    # ----------------------------------------------------------- 
     # - match: Host(`cdf.promo`) && PathPrefix(`/promo`)
     #   kind: Rule
     #   # middlewares:
