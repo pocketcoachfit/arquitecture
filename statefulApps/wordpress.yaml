@@ -37,6 +37,7 @@ spec:
       containers:
       - image: wordpress:6.2.1-apache
         name: wordpress
+        working_dir: /var/www/html/p
         env:
         - name: WORDPRESS_DB_HOST
           value: wordpress-mysql
