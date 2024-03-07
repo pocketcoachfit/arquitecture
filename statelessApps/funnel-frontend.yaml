@@ -16,7 +16,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: hello
-          image: ghcr.io/pocketcoachfit/funnel-frontend:v1.5.1
+          image: ghcr.io/pocketcoachfit/funnel-frontend:v1.5.2
           ports:
             - name: main
               containerPort: 3000
