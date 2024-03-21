@@ -22,3 +22,11 @@ spec:
       services:
         - name: clients-data-api
           port: 80
+
+    # food-backend
+    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/tracking`)
+      kind: Rule
+      services:
+        - name: food-backend
+          port: 80
+
