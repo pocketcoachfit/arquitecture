@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracking-api
+  template:
+    metadata:
+      labels:
+        app: tracking-api
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/tracking-api:v1.0.1
+          ports:
+            - name: main
+              containerPort: 8080
+          env:
+            - name: USELESSVAR
+              value: 42 
+          volumeMounts:
+            - name: envfile
+              mountPath: /app/.env
+      volumes:
+        - name: envfile
+          hostPath:
+            path: /secrets/tracking-api/.env
+            type: File
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: tracking-api
+spec:
+  selector:
+    app: tracking-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
