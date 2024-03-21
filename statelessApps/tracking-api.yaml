@@ -20,9 +20,6 @@ spec:
           ports:
             - name: main
               containerPort: 8080
-          env:
-            - name: USELESSVAR
-              value: 42 
           volumeMounts:
             - name: envfile
               mountPath: /app/.env
