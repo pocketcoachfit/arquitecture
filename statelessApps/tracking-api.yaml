@@ -19,7 +19,7 @@ spec:
           image: ghcr.io/pocketcoachfit/tracking-api:v1.0.2
           ports:
             - name: main
-              containerPort: 8080
+              containerPort: 3000
           volumeMounts:
             - name: envfile
               mountPath: /app/.env
