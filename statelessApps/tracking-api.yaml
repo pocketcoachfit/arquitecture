@@ -22,7 +22,7 @@ spec:
               containerPort: 8080
           volumeMounts:
             - name: envfile
-              mountPath: /app/dist/.env
+              mountPath: /app/.env
       volumes:
         - name: envfile
           hostPath:
