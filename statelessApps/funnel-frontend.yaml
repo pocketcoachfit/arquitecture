@@ -21,18 +21,12 @@ spec:
             - name: main
               containerPort: 3000
           volumeMounts:
-            - name: env
-              mountPath: /app/.env
             - name: env-local
               mountPath: /app/.env.local
       securityContext:
         runAsUser: 1001
         fsGroup: 1000
       volumes:
-        - name: env
-          hostPath:
-            path: /secrets/funnel-frontend/.env
-            type: File
         - name: env-local
           hostPath:
             path: /secrets/funnel-frontend/.env.local
