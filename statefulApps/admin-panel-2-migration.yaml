@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: admin-panel-2-migration
+spec:
+  selector:
+    matchLabels:
+      app: admin-panel-2-migration
+  serviceName: admin-panel-2-migration
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: admin-panel-2-migration # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: admin-panel-2-migration
+          image: ghcr.io/pocketcoachfit/admin-panel-2:v2.1.0
+          # command: ["sleep", "3600"]
+          command: ["/bin/sh", "-c"]
+          args: ["yarn build && yarn start"]
+          ports:
+            - name: main
+              containerPort: 1337
+          volumeMounts:
+            - name: envfile
+              subPath: .env
+              mountPath: /opt/app/.env
+            - name: sqlite-file
+              mountPath: /opt/app/.tmp/data.db
+            - name: uploads
+              mountPath: /opt/app/public/uploads
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+      volumes:
+        - name: envfile
+          configMap:
+            name: admin-panel-2-migration
+        - name: sqlite-file
+          hostPath:
+            path: /data/admin-panel-2-migration/database/data.db
+            type: File
+        - name: uploads
+          hostPath:
+            path: /data/admin-panel-2-migration/uploads
+            type: Directory
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: admin-panel-2-migration
+data:
+  .env: |
+    PUBLIC_URL = 'https://testing.pocketcoach.fit/api' # original -> https://pocketcoach.fit/secure 
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: admin-panel-2-migration
+spec:
+  selector:
+    app: admin-panel-2-migration
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
