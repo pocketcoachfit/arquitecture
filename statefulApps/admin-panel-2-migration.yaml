@@ -28,7 +28,6 @@ spec:
               containerPort: 1337
           volumeMounts:
             - name: envfile
-              subPath: .env
               mountPath: /opt/app/.env
             - name: sqlite-file
               mountPath: /opt/app/.tmp/data.db
@@ -39,8 +38,9 @@ spec:
         runAsGroup: 0
       volumes:
         - name: envfile
-          configMap:
-            name: admin-panel-2-migration
+          hostPath:
+            path: /data/admin-panel-2-migration/.env
+            type: File
         - name: sqlite-file
           hostPath:
             path: /data/admin-panel-2-migration/database/data.db
@@ -51,15 +51,7 @@ spec:
             type: Directory
 
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: admin-panel-2-migration
-data:
-  .env: |
-    PUBLIC_URL = 'https://testing.pocketcoach.fit/api' # original -> https://pocketcoach.fit/secure 
 
----
 kind: Service
 apiVersion: v1
 metadata:
