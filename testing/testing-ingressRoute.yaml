@@ -13,5 +13,5 @@ spec:
     - match: Host(`testing.pocketcoach.fit`)
       kind: Rule
       services:
-        - name: localapp
+        - name: whoami
           port: 80
