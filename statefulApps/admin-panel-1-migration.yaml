@@ -19,7 +19,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: admin-panel-1-migration
-          image: ghcr.io/pocketcoachfit/admin-panel-1:v2.0.0
+          image: ghcr.io/pocketcoachfit/admin-panel-1:v2.1.0
           # command: ["sleep", "3600"]
           command: ["/bin/sh", "-c"]
           args: ["yarn build && yarn start"]
