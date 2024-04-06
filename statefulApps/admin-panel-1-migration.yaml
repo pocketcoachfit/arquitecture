@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: admin-panel-1-migration
+spec:
+  selector:
+    matchLabels:
+      app: admin-panel-1-migration
+  serviceName: admin-panel-1-migration
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: admin-panel-1-migration # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: admin-panel-1-migration
+          image: ghcr.io/pocketcoachfit/admin-panel-1:v2.0.0
+          # command: ["sleep", "3600"]
+          command: ["/bin/sh", "-c"]
+          args: ["yarn build && yarn start"]
+          ports:
+            - name: main
+              containerPort: 1337
+          volumeMounts:
+            - name: envfile
+              mountPath: /opt/app/.env
+            - name: sqlite-file
+              mountPath: /opt/app/.tmp/data.db
+            - name: uploads
+              mountPath: /opt/app/public/uploads
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+      volumes:
+        - name: envfile
+          hostPath:
+            path: /secrets/admin-panel-1-migration/.env
+            type: File
+        - name: sqlite-file
+          hostPath:
+            path: /data/admin-panel-1-migration/database/data.db
+            type: File
+        - name: uploads
+          hostPath:
+            path: /data/admin-panel-1-migration/uploads
+            type: Directory
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: admin-panel-1-migration
+spec:
+  selector:
+    app: admin-panel-1-migration
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
