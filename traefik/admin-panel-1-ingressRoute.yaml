@@ -31,5 +31,5 @@ spec:
     - match: Host(`admin.pocketcoach.fit`)
       kind: Rule
       services:
-        - name: whoami 
+        - name: admin-panel-1-migration
           port: 80
