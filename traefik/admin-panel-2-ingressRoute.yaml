@@ -17,3 +17,11 @@ spec:
       services:
         - name: admin-panel-2
           port: 80
+
+    # admin-panel-2 
+    - match: Host(`p2.pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: admin-panel-2-migration
+          port: 80
+
