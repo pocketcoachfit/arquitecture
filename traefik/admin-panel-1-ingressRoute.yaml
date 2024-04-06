@@ -26,3 +26,10 @@ spec:
       services:
         - name: admin-panel-1-migration
           port: 80
+
+    # admin-panel-1 
+    - match: Host(`admin.pocketcoach.fit`)
+      kind: Rule
+      services:
+        - name: admin-panel-1-migration
+          port: 80
