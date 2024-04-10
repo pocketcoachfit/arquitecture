@@ -21,34 +21,16 @@ spec:
             - name: main
               containerPort: 3000
           volumeMounts:
-            - name: env-production
-              subPath: .env.production
-              mountPath: /app/.env.production
             - name: env-local
               mountPath: /app/.env.local
       securityContext:
         runAsUser: 1001
         fsGroup: 1000
       volumes:
-        - name: env-production
-          configMap:
-            name: website-env-production
         - name: env-local
           hostPath:
             path: /secrets/website/.env.local
             type: File
-
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: website-env-production
-data:
-  .env.production: |
-    NEXT_PUBLIC_BASE_URL = 'https://pocketcoach.fit'
-    NEXT_PUBLIC_STRAPI_URL = $NEXT_PUBLIC_BASE_URL/strapi
-    NEXT_LOCAL_REST_API_URL = $NEXT_PUBLIC_STRAPI_URL
-    NEXT_LOCAL_GRAPH_API_URL = $NEXT_PUBLIC_STRAPI_URL/graphql
 
 ---
 kind: Service
