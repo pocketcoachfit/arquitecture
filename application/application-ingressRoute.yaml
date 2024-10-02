@@ -10,7 +10,7 @@ spec:
     certResolver: myresolver
   routes:
     # sitemaps
-    - match: Host(`application.pocketcoach.fit`)
+    - match: Host(`application.pocketcoach.fit`) && PathPrefix(`/.well-known`)
       kind: Rule
       services:
         - name: application-helper 
