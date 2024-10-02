@@ -16,7 +16,19 @@ spec:
           port: 80
     - match: Host(`application.pocketcoach.fit`)
       kind: Rule
+      middlewares:
+        - name: add-prefix-for-blog 
       services:
         - name: website 
           port: 80
+
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-prefix-for-blog
+spec:
+  addPrefix:
+    prefix: /descarga-de-la-app-pocket-coach
 
