@@ -17,7 +17,7 @@ spec:
     - match: Host(`application.pocketcoach.fit`)
       kind: Rule
       middlewares:
-        - name: add-prefix-for-blog 
+        - name: redirect-application-index 
       services:
         - name: website 
           port: 80
@@ -27,8 +27,10 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: add-prefix-for-blog
+  name: redirect-application-index
 spec:
-  addPrefix:
-    prefix: /descarga-de-la-app-pocket-coach
+  redirectRegex:
+      regex: "^https://application.pocketcoach.fit/?$"
+      replacement: "https://pocketcoach.fit/descarga-de-la-app-pocket-coach"
+      permanent: true
 
