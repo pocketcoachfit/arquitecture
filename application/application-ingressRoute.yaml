@@ -9,15 +9,24 @@ spec:
   tls:
     certResolver: myresolver
   routes:
+    - match: Host(`application.pocketcoach.fit`) && PathPrefix(`/`)
+      kind: Rule
+      middlewares:
+        - name: redirect-application-index 
+      services:
+        - name: website 
+          port: 80
+
     - match: Host(`application.pocketcoach.fit`) && PathPrefix(`/.well-known`)
       kind: Rule
       services:
         - name: application-helper 
           port: 80
-    - match: Host(`application.pocketcoach.fit`) && PathPrefix(`/`)
+
+    - match: Host(`application.pocketcoach.fit`)
       kind: Rule
       middlewares:
-        - name: redirect-application-index 
+        - name: return-404
       services:
         - name: website 
           port: 80
@@ -34,3 +43,14 @@ spec:
       replacement: "https://pocketcoach.fit/descarga-de-la-app-pocket-coach"
       permanent: true
 
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: return-404
+spec:
+  responseModifier:
+    headers:
+      X-Custom-Header: "not-found"
+      Status: "404"
