@@ -14,7 +14,7 @@ spec:
       services:
         - name: application-helper 
           port: 80
-    - match: Host(`application.pocketcoach.fit`) && PathPrefix(`/`)
+    - match: Host(`application.pocketcoach.fit`) && Path(`/`)
       kind: Rule
       middlewares:
         - name: redirect-application-index 
