@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-helper
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application-helper
+  template:
+    metadata:
+      labels:
+        app: application-helper
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: application-helper
+          image: ghcr.io/pocketcoachfit/application:v1.0.0
+          ports:
+            - name: main
+              containerPort: 3000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: application-helper
+spec:
+  selector:
+    app: application-helper
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
