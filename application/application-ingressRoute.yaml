@@ -13,6 +13,6 @@ spec:
     - match: Host(`application.pocketcoach.fit`)
       kind: Rule
       services:
-        - name: whoami 
+        - name: application-helper 
           port: 80
 
