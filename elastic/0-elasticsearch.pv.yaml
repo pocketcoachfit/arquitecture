@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: elasticsearch-pv
+spec:
+  capacity:
+    storage: 1Gi  # Must match PVC request
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  # storageClassName: local-storage
+  local:
+    path: /pv/elasticsearch  # Ensure this directory exists on your node
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: persistence-id
+              operator: In
+              values:
+                - main
+
