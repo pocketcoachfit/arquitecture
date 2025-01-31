@@ -12,4 +12,12 @@ spec:
   # storageClassName: local-storage
   local:
     path: /pv/elasticsearch  # Ensure this directory exists on your node
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: persistence-id
+              operator: In
+              values:
+                - main
 
