@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   # storageClassName: local-storage
   local:
-    path: /pv/elasticsearch2 # Ensure this directory exists on your node
+    path: /pv/elasticsearch # Ensure this directory exists on your node
   nodeAffinity:
     required:
       nodeSelectorTerms:
