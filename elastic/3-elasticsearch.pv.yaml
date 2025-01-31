@@ -9,6 +9,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
   local:
     path: /pv/elasticsearch  # Ensure this directory exists on your node
 
