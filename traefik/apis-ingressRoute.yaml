@@ -38,10 +38,10 @@ spec:
           port: 80
 
     # searching-api
-    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/searching`)
+    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/search`)
       kind: Rule
       middlewares:
-        - name: strip-prefix-searching
+        - name: strip-prefix-search
       services:
         - name: search-api 
           port: 80
