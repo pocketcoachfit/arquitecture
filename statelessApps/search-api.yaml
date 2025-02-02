@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: search-api
+  template:
+    metadata:
+      labels:
+        app: search-api
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: main
+          image: ghcr.io/pocketcoachfit/search-api:v0.1.0
+          ports:
+            - name: main
+              containerPort: 80 
+          volumeMounts:
+            - name: envfile
+              mountPath: /app/.env
+      volumes:
+        - name: envfile
+          hostPath:
+            path: /secrets/search-api/.env
+            type: File
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: search-api
+spec:
+  selector:
+    app: search-api
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
+
