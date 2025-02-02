@@ -37,9 +37,11 @@ spec:
         - name: report-generator 
           port: 80
 
-    # clients-data-api
+    # searching-api
     - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/searching`)
       kind: Rule
+      middlewares:
+        - name: strip-prefix-searching
       services:
         - name: search-api 
           port: 80

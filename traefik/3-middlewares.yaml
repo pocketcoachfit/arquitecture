@@ -63,3 +63,14 @@ spec:
   addPrefix:
     prefix: /promo
 
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix-searching
+spec:
+  stripPrefix:
+    prefixes:
+      - "/searching"
+    forceSlash: false
+
