@@ -16,7 +16,7 @@ spec:
         - name: registry-key-secret
       containers:
         - name: main
-          image: ghcr.io/pocketcoachfit/search-api:v1.0.0
+          image: ghcr.io/pocketcoachfit/search-api:v1.1.0
           ports:
             - name: main
               containerPort: 80 
