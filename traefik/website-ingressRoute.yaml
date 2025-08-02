@@ -11,6 +11,8 @@ spec:
   routes:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/site-index`)
       kind: Rule
+      middlewares:
+        - name: strip-site-index
       services:
         - name: site-index
           port: 80
@@ -19,3 +21,14 @@ spec:
       services:
         - name: website
           port: 80
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-site-index
+  namespace: default
+spec:
+  stripPrefix:
+    prefixes:
+      - /site-index
