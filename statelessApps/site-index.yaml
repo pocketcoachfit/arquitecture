@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: site-index
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: site-index
+  template:
+    metadata:
+      labels:
+        app: site-index
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/site-index:v1.0.0
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: envfile
+              mountPath: /app/.env
+      volumes:
+        - name: envfile
+          hostPath:
+            path: /secrets/site-index/.env
+            type: File
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: site-index
+spec:
+  selector:
+    app: site-index
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
