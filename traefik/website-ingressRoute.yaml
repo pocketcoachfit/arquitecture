@@ -9,7 +9,11 @@ spec:
   tls:
     certResolver: myresolver
   routes:
-    # website
+    - match: Host(`pocketcoach.fit`) && Path(`/site-index`)
+      kind: Rule
+      services:
+        - name: site-index
+          port: main
     - match: Host(`pocketcoach.fit`)
       kind: Rule
       services:
