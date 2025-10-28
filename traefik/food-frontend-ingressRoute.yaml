@@ -12,8 +12,6 @@ spec:
     # food-frontend
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/app`)
       kind: Rule
-      middlewares:
-        - name: strip-prefix-app
       services:
         - name: food-frontend
           port: 80
@@ -24,14 +22,3 @@ spec:
       services:
         - name: food-frontend
           port: 80
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: strip-prefix-app
-spec:
-  stripPrefix:
-    prefixes:
-      - "/app"
-    forceSlash: false
