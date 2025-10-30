@@ -24,6 +24,9 @@ spec:
             - name: env-production
               subPath: .env.production
               mountPath: /app/.env.production
+            - name: env-local
+              subPath: .env.local
+              mountPath: /app/.env.local
       # securityContext:
       #   runAsUser: 1001
       #   fsGroup: 1000
