@@ -24,10 +24,17 @@ spec:
             - name: env-production
               subPath: .env.production
               mountPath: /app/.env.production
+      # securityContext:
+      #   runAsUser: 1001
+      #   fsGroup: 1000
       volumes:
         - name: env-production
           configMap:
             name: food-frontend-env-production
+        - name: env-local
+          hostPath:
+            path: /secrets/food-frontend/.env.local
+            type: File
 
 ---
 apiVersion: v1
