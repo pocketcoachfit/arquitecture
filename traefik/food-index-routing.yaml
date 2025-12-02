@@ -11,19 +11,6 @@ spec:
   routes:
     - match: Host(`pocketcoach.fit`) && PathPrefix(`/db`)
       kind: Rule
-      middlewares:
-        - name: strip-food-index
       services:
         - name: food-index
           port: 80
-
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: strip-food-index
-  namespace: default
-spec:
-  stripPrefix:
-    prefixes:
-      - /db
