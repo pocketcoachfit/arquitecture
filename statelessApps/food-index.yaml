@@ -16,7 +16,7 @@ spec:
         - name: japimexico-registry
       containers:
         - name: food-index
-          image: ghcr.io/japimexico/food-index:v1.0.1
+          image: ghcr.io/pocketcoach/food-index:v1.0.1
           ports:
             - name: main
               containerPort: 3000
