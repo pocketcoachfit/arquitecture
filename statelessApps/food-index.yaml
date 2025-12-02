@@ -21,10 +21,10 @@ spec:
             - name: main
               containerPort: 3000
           volumeMounts:
-            - name: localEnvfile
+            - name: local-envfile
               mountPath: /app/.env.local
       volumes:
-        - name: localEnvfile
+        - name: local-envfile
           hostPath:
             path: /secrets/food-index/.env.local
             type: File
