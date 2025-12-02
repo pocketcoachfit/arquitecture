@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-index
+spec:
+  selector:
+    matchLabels:
+      app: food-index
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: food-index # has to match .spec.selector.matchLabels
+    spec:
+      imagePullSecrets:
+        - name: japimexico-registry
+      containers:
+        - name: food-index
+          image: ghcr.io/japimexico/food-index:v1.0.1
+          ports:
+            - name: main
+              containerPort: 3000
+          volumeMounts:
+            - name: envfile
+              mountPath: /app/.env
+      volumes:
+        - name: envfile
+          hostPath:
+            path: /secrets/food-index/.env
+            type: File
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-index
+spec:
+  selector:
+    app: food-index
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main

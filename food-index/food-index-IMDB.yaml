@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: food-index-IMDB
+spec:
+  selector:
+    matchLabels:
+      app: food-index-IMDB
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: food-index-IMDB # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+        - name: food-index-IMDB
+          image: valkey/valkey:8.1.3
+          ports:
+            - name: main
+              containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: food-index-IMDB
+spec:
+  selector:
+    app: food-index-IMDB
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: main
