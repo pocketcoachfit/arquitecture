@@ -21,12 +21,12 @@ spec:
             - name: main
               containerPort: 3000
           volumeMounts:
-            - name: localEnvfile
-              mountPath: /app/.env.local
+            - name: envfile
+              mountPath: /app/.env
       volumes:
-        - name: localEnvfile
+        - name: envfile
           hostPath:
-            path: /secrets/site-index/.env.local
+            path: /secrets/site-index/.env
             type: File
 
 ---
