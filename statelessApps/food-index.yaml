@@ -13,7 +13,7 @@ spec:
         app: food-index # has to match .spec.selector.matchLabels
     spec:
       imagePullSecrets:
-        - name: japimexico-registry
+        - name: registry-key-secret
       containers:
         - name: food-index
           image: ghcr.io/pocketcoachfit/food-index:v1.0.1
