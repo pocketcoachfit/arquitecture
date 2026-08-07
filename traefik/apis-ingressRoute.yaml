@@ -38,7 +38,7 @@ spec:
           port: 80
 
     # link-warmup
-    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/tools`)
+    - match: Host(`api.pocketcoach.fit`) && PathPrefix(`/warmup`)
       kind: Rule
       services:
         - name: link-warmup
