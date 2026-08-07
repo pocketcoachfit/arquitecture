@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: link-warmup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: link-warmup
+  template:
+    metadata:
+      labels:
+        app: link-warmup
+    spec:
+      imagePullSecrets:
+        - name: registry-key-secret
+      containers:
+        - name: hello
+          image: ghcr.io/pocketcoachfit/link-warmup:v1.0.0
+          ports:
+            - name: main
+              containerPort: 3000
+          env:
+            - name: WARMUP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: link-warmup-secret
+                  key: WARMUP_SECRET
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: link-warmup
+spec:
+  selector:
+    app: link-warmup
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: main
