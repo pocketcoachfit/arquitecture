@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: indexnow
+  name: index-now
   namespace: default
 data:
   # Replace this with your actual 8-to-128 character hexadecimal IndexNow key
@@ -35,17 +35,17 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: indexnow
+  name: index-now
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: indexnow
+      app: index-now
   template:
     metadata:
       labels:
-        app: indexnow
+        app: index-now
     spec:
       automountServiceAccountToken: false
       securityContext:
@@ -55,14 +55,14 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       containers:
-        - name: indexnow-server
+        - name: index-now-server
           image: gcr.io/distroless/nodejs22-debian12:nonroot
           args: ["/app/server.mjs"]
           env:
             - name: INDEXNOW_KEY
               valueFrom:
                 configMapKeyRef:
-                  name: indexnow
+                  name: index-now
                   key: INDEXNOW_KEY
           ports:
             - containerPort: 8080
@@ -86,17 +86,17 @@ spec:
       volumes:
         - name: app-code
           configMap:
-            name: indexnow
+            name: index-now
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: indexNow
+  name: index-now
   namespace: default
 spec:
   selector:
-    app: indexNow
+    app: index-now
   ports:
     - port: 80
       targetPort: 8080
@@ -104,7 +104,7 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: indexNow
+  name: index-now
   namespace: default
 spec:
   entryPoints:
@@ -112,9 +112,9 @@ spec:
   tls:
     certResolver: myresolver
   routes:
-    - match: Host(`pocketcoach.fit`) && Path(`/indexNow/`)
+    - match: Host(`pocketcoach.fit`) && Path(`/indexnow/`)
       kind: Rule
       priority: 100
       services:
-        - name: indexNow
+        - name: index-now
           port: 80
