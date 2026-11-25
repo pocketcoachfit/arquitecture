@@ -10,7 +10,7 @@ data:
     import http from 'node:http';
 
     const indexNowKey = process.env.INDEXNOW_KEY || '';
-    const keyPath = `/indexnow/${indexNowKey}.txt`;
+    const keyPath = `/${indexNowKey}.txt`;
     const keyBody = Buffer.from(indexNowKey, 'utf8');
 
     console.log("indexNowKey= ", indexNowKey)
@@ -120,7 +120,7 @@ spec:
   tls:
     certResolver: myresolver
   routes:
-    - match: Host(`pocketcoach.fit`) && PathPrefix(`/indexnow/`)
+    - match: Host(`pocketcoach.fit`) && PathPrefix(`/ad03bc4dd63e496192c64e66a3d6dd0f.txt`)
       kind: Rule
       priority: 100
       services:
