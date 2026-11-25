@@ -13,8 +13,14 @@ data:
     const keyPath = `/indexnow/${indexNowKey}.txt`;
     const keyBody = Buffer.from(indexNowKey, 'utf8');
 
+    console.log("indexNowKey= ", indexNowKey)
+    console.log("keyPath= ", keyPath)
+    console.log("keyBody= ", keyBody, "\n")
+
     const server = http.createServer((req, res) => {
       const isGetOrHead = req.method === 'GET' || req.method === 'HEAD';
+
+      console.log(req.url)
 
       if (indexNowKey && req.url === keyPath && isGetOrHead) {
         res.writeHead(200, {
@@ -30,7 +36,9 @@ data:
       res.end('Not Found');
     });
 
+    console.log("listening in port 8080")
     server.listen(8080, '0.0.0.0');
+
 ---
 apiVersion: apps/v1
 kind: Deployment
